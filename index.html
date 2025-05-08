@@ -31,6 +31,9 @@
         
         /* Header */
         header {
+
+
+            
             position: fixed;
             top: 0;
             width: 100%;
@@ -609,7 +612,7 @@
             margin-top: 15px;
             color: var(--secondary);
         }
-        
+    
         /* Systems Section */
         .systems {
             padding: 120px 0;
@@ -849,14 +852,92 @@
             
             .btn-outline {
                 margin-left: 0;
+                /* Estilo da Avaliação no Footer */
+.star-rating {
+  margin: 15px 0;
+}
+
+.star {
+  font-size: 28px;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0 2px;
+}
+
+.star:hover,
+.star.active {
+  color: #FFD700;
+  transform: scale(1.2);
+}
+
+#rating-container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<!-- Botão de Feedback Flutuante -->
+<div id="feedback-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button onclick="openFeedback()" style="background: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+      <i class="fas fa-comment-dots"></i>
+    </button>
+  </div>
+  
+  <!-- Modal de Feedback (escondido inicialmente) -->
+  <div id="feedback-modal" style="display: none; position: fixed; bottom: 80px; right: 20px; width: 300px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000;">
+    <h3 style="margin-bottom: 15px;">Deixe seu feedback!</h3>
+    <textarea id="feedback-text" placeholder="O que você achou do site?" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: none;"></textarea>
+    <button onclick="submitFeedback()" style="background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 5px; margin-top: 10px; cursor: pointer;">Enviar</button>
+    <button onclick="closeFeedback()" style="background: transparent; border: none; color: var(--gray); margin-left: 10px; cursor: pointer;">Cancelar</button>
+  </div>
+  
+  <script>
+    function openFeedback() {
+      document.getElementById('feedback-modal').style.display = 'block';
+    }
+    function closeFeedback() {
+      document.getElementById('feedback-modal').style.display = 'none';
+    }
+    function submitFeedback() {
+      const feedback = document.getElementById('feedback-text').value;
+      if (feedback.trim() === '') {
+        alert('Por favor, digite seu feedback!');
+        return;
+      }
+      alert('Obrigado pelo seu feedback! ♥');
+      console.log('Feedback recebido:', feedback); // Você pode substituir por uma chamada AJAX para salvar no servidor
+      closeFeedback();
+    }
+    
+  </script>
 <body>
     <header id="header">
-        
+        <div class="footer-col">
+            <div id="rating-container" style="display: none; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+              <h3>Ajude a melhorar nosso site!</h3>
+              <p>Você chegou ao final. Que tal avaliar sua experiência?</p>
+              
+              <div class="star-rating">
+                <span class="star" onclick="rate(1)">★</span>
+                <span class="star" onclick="rate(2)">★</span>
+                <span class="star" onclick="rate(3)">★</span>
+                <span class="star" onclick="rate(4)">★</span>
+                <span class="star" onclick="rate(5)">★</span>
+              </div>
+              
+              <p id="rating-thanks" style="display: none; color: var(--accent); font-weight: 600;">
+                Obrigado pela avaliação! ♥
+              </p>
+            </div>
+          </div>
         <div class="container">
             <nav>
                 <a href="#" class="logo">
